@@ -1,3 +1,5 @@
+![](http://mailmao.com/images/logo-new.png)
+
 邮差猫 Mailmao
 ==========
 
