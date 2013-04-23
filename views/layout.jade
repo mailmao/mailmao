@@ -1,0 +1,42 @@
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='shortcut icon',type='image/x-icon',href='/images/favicon.ico')
+  body(class="#{title == '邮差猫'?'home':'not-home'}")
+   block header
+     div#hd.clearfix
+      div#ihd.container.clearfix
+       .row
+        div#logo.span3
+         h1
+          a(href="/") 邮差猫
+           span beta
+        div#nav.span9.clearfix
+         ul.clearfix.unstyled
+            li: a(href="/") <i class="icon-home"></i> 首页
+            li: a(href="/about") <i class="icon-heart-empty"></i> 关于本喵
+            - if (typeof(user) !== 'undefined' && user !== '')
+             li.usr-name.clearfix
+               img.avatar(src="#{user.profile_image_url}",alt="#{user.screen_name}",title="#{user.screen_name}",rel="tooltip")
+             //- li.subscribe
+             //-  a.go-to-subscribe(href="/subscribe") <i class="icon-group"></i> 订阅管理
+             //- li.mime
+             //-  a.go-to-mime(href="/mime") <i class="icon-wrench"></i> 个人设置
+             li.logout
+              a.go-to-logout(href="/logout") <i class="icon-off"></i> 登出
+   block content
+   block footer
+    div#ft
+     div#ift.container.clearfix
+      div.row
+       p.info.span5 &copy; 2012 邮差猫 #{version} | #{desc}
+       div.span7.by 
+        img(src='http://mailmao.b0.upaiyun.com/me.jpg',alt="brought to you by GuoYu",title="brought to you by GuoYu")
+        a(href="http://weibo.com/137601206") Designed by GuoYu
+    script(src='/javascripts/lib/jquery-latest.min.js')
+    script(src='/javascripts/lib/bootstrap.min.js')
+   block js
+    script
+      $('.avatar').tooltip();

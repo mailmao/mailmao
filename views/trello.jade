@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .container
+    .row
+      .span12
+        .trello.clearfix
+            h3.title 还差一步，请授权您的trello账户
+            .exchange.clearfix
+                .left
+                    img.avatar(src="#{user.profile_image_url}",alt="#{user.screen_name}",title="#{user.screen_name}",rel="tooltip") 
+                .right
+                    a#vTrello.trello-btn(href="javascript:void(0);") 授权Trello
+block js
+    script(src='/javascripts/trello-client.js')
+    script(src="/javascripts/trello.js");

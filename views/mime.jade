@@ -1,0 +1,69 @@
+extends layout
+
+block content
+ div#cnt.container.clearfix
+  div#icnt.row.clearfix
+    div.mime-left
+     div.avatar
+      img(src='#{user.avatar_large}',width="95",height="95",class='large-avatar')
+      p 你好，#{user.screen_name}
+    div.mime-right
+     div.mime-setting
+      .tabbable.setting-tab
+        ul.nav.nav-tabs#settingTabs
+          li: a(href="#tabDataSource") <i class="icon-inbox"></i> 数据源
+          li: a(href="#tabWeeklySettings") <i class="icon-envelope"></i> 周报设置
+          li: a(href="#tabContacts") <i class="icon-user"></i> 联系人
+        .tab-content
+          .tab-pane#tabDataSource
+            form.form-horizontal
+              div.control-group.data-source
+                label.control-label(for="mimeData") 已授权数据源
+                div.controls
+                 span.help-inline= trelloFlag ? 'trello' : '暂无'
+              div.control-group
+                label.control-label(for="mimeTitle") 输出板块
+                div.controls
+                  span.help-inline= setting.outputBoard ? setting.outputBoard.name : '暂无'
+          .tab-pane#tabWeeklySettings
+           form.form-horizontal
+            div.control-group
+              label.control-label(for="mimeTitle") 常用周报标题
+              div.controls
+                span.help-inline= setting.title ? setting.title : '暂无'
+            div.control-group
+              label.control-label(for="mimeImg") 常用背景图片
+              div.controls
+                - if (setting.banner)
+                  img.mime-bg(src="#{setting.banner}")
+                - else
+                  span.help-inline 暂无
+          .tab-pane#tabContacts
+           form.form-horizontal
+            div.control-group
+              label.control-label(for="mimeEmail") 我的邮箱
+              div.controls
+                span.help-inline= setting.email ? setting.email : '暂无'
+            div.control-group
+              label.control-label(for="mimeSendToList") 常用收件人
+              div.controls.send-to-list-cnt
+               //- - if (client.length > 0)
+               //-   ul.email-list.clearfix
+               //-    - each u in client
+               //-     li= u
+               //- - else
+               //-   span.help-inline 暂无常用收件人
+      div.control-group
+        div.controls
+         a.update-btn.btn(href="/mime/update",id="updateProfile") <i class="icon-wrench"></i> 修改设置
+block js
+ script(src='/javascripts/mime.js')
+ script(src='/javascripts/bs/bootstrap-tab.js')
+ script
+  $(function () {
+    $('#settingTabs a:first').tab('show');
+    $('#settingTabs a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+  });

@@ -1,0 +1,127 @@
+style
+   .desc img {
+    border:1px solid #ddd;
+    padding:3px;
+    background-color:#fff;
+    max-width:500px;
+   }
+   .desc h2,.desc h3 {
+    font-size:12px;
+    margin-bottom:10px;
+    border-left:5px solid #999;
+    line-height:2;
+    padding-left:8px;
+    margin-left:-11px;
+   }
+   .desc h2 {
+    font-size:14px;
+   }
+   .desc pre {
+    display:block;
+    margin:5px 0;
+    background:#F6EFD5 url("http://cdn2.iconfinder.com/data/icons/ledicons/page_code.png") no-repeat 5px 10px;
+    padding:0px 0px 0px 30px;
+    border:1px solid #ddd;
+   }
+   .desc pre code {
+    display:block;
+    background-color:#fff;
+    padding:10px;
+    color:#444;
+   }
+table(border="0",cellpadding="0",cellspacing="0",height="100%",width="100%")
+    tbody
+        tr
+          td(align="center",valign="top",style="padding-top:30px;")
+            table(border="0",cellpadding="0",cellspacing="0",width="660px",style="margin-left:auto;margin-right:auto;")
+              tbody
+                tr
+                  td(align="center",valign="top")
+                    table(border="0",cellpadding="0",cellspacing="0",width="660px",style="width:660px;background-color:#17BCC0;position:relative;")
+                      tbody
+                        tr
+                          td(valign="middle",width="70",align="center")
+                            table(border="0",cellpadding="0",cellspacing="0",width="100%")
+                              tbody
+                                tr
+                                  td
+                                    img.avatar(src="#{user.profile_image_url}",style="width:50px;height:50px;border-radius:50px;margin-left:15px;")
+                          td(valign="top",width="450")
+                            table(border="0",cellpadding="0",cellspacing="0",width="100%")
+                              tbody
+                                tr
+                                  td
+                                    h1.title#sendTitle(style="font-size:26px;color:#fff;text-align:left;line-height:1;padding:25px 0px 25px 15px;background-color:#17BCC0;margin:0;letter-spacing:3px;font-weight:normal")
+                                     span.title #{title}
+                                     - if(typeof(date) !== 'undefined')
+                                      span#sendDate(style="font-size:14px;letter-spacing:0px;color:#ddd;") &nbsp;&nbsp;&nbsp; #{date}
+                                     - else
+                                      span#sendDate(style="font-size:14px;letter-spacing:0px;color:#ddd;") &nbsp;&nbsp;&nbsp; 
+                          td(valign="middle",width="160")
+                            table(border="0",cellpadding="0",cellspacing="0",width="100%",height="100%")
+                              tbody
+                                tr
+                                  td(valign="middle")
+                                    div.vol(style="font-size:12px;color:#fff;background-color:#17BCC0;") 邮差猫 v#{version}
+                                  td(valign="middle")
+                                    //- a(href="http://dev.mailmao.com:9000/#{uid}/subscribe",style="color") 订阅这个频道
+                                    img(src="http://pic.alipayobjects.com/e/201209/1CGPoVRMHF.png",style="margin-left:3px;")
+                tr
+                  td(width="660px",height="3")
+                tr
+                  td(width="660px")
+                    img#sendBg(src="#{decodeURI(bg).indexOf('_660') > -1 ? decodeURI(bg) : decodeURI(bg) + '_660'}",width="660px")
+                tr
+                  td(style="height:3px",width="660px")
+                tr
+                  td(align="left",valign="top",width="660px",style="overflow:hidden;overflow-x:hidden;position:relative")
+                    - if(typeof(onlineWeekly) !== 'undefined' && onlineWeekly === true)
+                       div.md-preview
+                       div#md
+                        textarea(id="onlineWeekly",placeholder="在这里写...")
+                    - if(typeof(flag) !== 'undefined' && flag === 'md')
+                      div(style="margin:1px 0 !important;background-color:#f5f5f5;overflow:hidden;padding:10px !important;width:640px;overflow-x:hidden") !{cnt}
+                    - if(typeof(lists) !== 'undefined')
+                      each l in lists
+                        div(style="margin:1px 0 !important;background-color:#f5f5f5;overflow:hidden;padding:0 !important;width:660px;overflow-x:hidden").board-box
+                          h3(style="display:block;margin-right:10px;font-size:20px;color:#3F66A0;margin:0px 0px 20px 0px;margin-bottom:1px;padding:10px 20px;text-align:left;",data-list-id="#{l.id}").list-name= l.name
+                          ul(style="margin: 0; padding: 0;font-size:14px;color:#444;line-height:1.5;")
+                           each c in l.cards
+                            if (c.name)
+                             li.single-card(style="padding:0;margin:0;text-indent:0;background-color:#efefef;margin:0px 1px 1px 0px;padding:10px 20px;list-style:none;border-bottom:1px solid #ddd;display:block !important;position:relative;line-height:1.8;color:#444;font-size:14px;",data-card-id="#{c.id}") 
+                               div.card-title(style="border-bottom:2px solid #17BCC0;margin-top:10px;")
+                                    span(style="font-weight:bold;background-color:#17BCC0;color:#fff;padding:5px 10px;") #{c.name}
+                                    if (c.labels.length > 0)
+                                       - each label in c.labels
+                                        i.label(style="background-color:#{label.color};color:#fff;padding:4px 12px;margin-left:1px;font-style:normal;font-weight:normal;font-size:12px;box-shadow:0px 1px 3px #ddd;") #{label.name}
+                               if (c.badges.attachments && c.badges.attachments > 0)
+                                div.attrs(style="margin-top:30px;")
+                                 - each attrCard in attrFile
+                                  - if (attrCard.id == c.id)
+                                    - each attr in attrCard.attachments
+                                      - if (attr.name.substr(-3) == 'png' || attr.name.substr(-3) == 'jpg' || attr.name.substr(-3) == 'gif' || attr.name.substr(-3) == 'peg')
+                                          a(href="#{attr.url}",target="_blank")
+                                            - each previewImg in attr.previews
+                                             - if (previewImg.height == 160)
+                                                img.single-attr(src="#{previewImg.url}",style="width:#{previewImg.width}px;height:#{previewImg.height}px;padding:3px;border:1px solid #ddd;background-color:#fff;margin-right:20px;margin-bottom:10px;")
+                                      - else 
+                                        div.attr-file
+                                          a(href="#{attr.url}") 附件：#{attr.name}（下载）
+                               if (c.html !== '')
+                                div.desc(style="font-size:14px;color:#444w;display:block;margin-top:15px;font-weight:normal;overflow-x:hidden;") !{c.html}
+                               else 
+                                div.desc(style="font-size:14px;color:#444;display:block;margin-top:5px;font-weight:normal;background: url(http://cdn2.iconfinder.com/data/icons/splashyIcons/comment_question.png) no-repeat 3px 2px;padding-left:24px;display:none;") 这个项目没有详细描述
+                               if (c.idChecklists)
+                                each cardCheckList in c.idChecklists
+                                 each realCheckList in checkLists
+                                  if realCheckList.id == cardCheckList
+                                   div.check-list-wrap
+                                    ul.check-list(style="padding:0;margin:0;font-size:14px;font-weight:bold;margin-top:10px;list-style:none;") 
+                                      span(style="display:block;background-color:#F9EFB7;padding:4px 10px;border:1px solid #ddd;color:#444;")= realCheckList.name
+                                      each clitem in realCheckList.checkItems
+                                       li(style="padding:0;margin:0;font-weight:normal;color:#444;border:1px solid #ddd;padding:5px 10px;background-color:#f5f5f5;margin-top:-1px;background-color:#fff;background:#fff url(http://cdn4.iconfinder.com/data/icons/fugue/icon/calendar-task.png) no-repeat 8px 7px;padding-left:30px;font-size:12px;position:relative;")= clitem.name
+                                          each cardCheckListState in c.checkItemStates
+                                           if cardCheckListState.idCheckItem == clitem.id
+                                            span(style="background:url(http://cdn1.iconfinder.com/data/icons/silk2/tick.png) no-repeat 99% 6px;font-style:normal;padding-right:25px;color:#999;background-color:#efefef; position: absolute;width:592px;height:30px;z-index:1;left:0;top:0;opacity:0.6;text-align:right;line-height:30px;") 已完成
+                tr 
+                  td(align="left",style="clear:both;padding:20px 0px;color:#999;margin-top:1px;font-size:12px;") &copy; 2012 !{title} | 邮差猫 v#{version} | Designed by <a href="http://guoyu.me">GuoYu</a>

@@ -1,0 +1,13 @@
+{
+  "name": "mailmao",
+  "version": "1.5",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "less-middleware": "*"
+  }
+}

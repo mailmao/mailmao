@@ -1,0 +1,93 @@
+extends layout
+
+block content
+ div#cnt.container.clearfix
+  div#icnt.row.clearfix
+    div.mime-left
+     div.avatar
+      img(src='#{userInfo.avatar_large}',width="95",height="95",class='large-avatar')
+    div.mime-right
+     - if (trelloFlag == false )
+        div.alert.alert-info 你还没有授权数据源，邮差猫现在支持授权Trello，自动导入周报内容。不过你也可以去首页试用在线发报
+         button.close(data-dismiss="alert") x
+     div.mime-setting
+      .tabbable.setting-tab
+        ul.nav.nav-tabs#settingTabs
+          li: a(href="#tabDataSource") <i class="icon-inbox"></i> 数据源
+          li: a(href="#tabWeeklySettings") <i class="icon-envelope"></i> 周报设置
+          li: a(href="#tabContacts") <i class="icon-user"></i> 联系人
+        .tab-content
+          .tab-pane#tabDataSource
+            form#changeDataSource.form-horizontal(action="/mime/saveSetting",method="POST")
+              div.control-group.data-source
+                label.control-label(for="mimeData") 授权数据源
+                div.controls
+                 ul.ds-vertify.clearfix.unstyled
+                  li: a#vTrello.trello(href="javascript:void(0);") Trello
+              div.control-group.data-source
+                label.control-label(for="mimeData") 确定输出板块
+                div.controls
+                  - if (trelloInfo !== '')
+                   ul.boards.clearfix.unstyled
+                    - each b in trelloInfo.boards
+                     - if (b.name == setting.outputBoard.name)
+                       li(board-id="#{b.id}",class="cur-board")
+                        a(href="javascript:void(0)") #{b.name}
+                     - else
+                       li(board-id="#{b.id}") 
+                        a(href="javascript:void(0)") #{b.name}
+                  - else
+                   span.help-inline 请先授权数据源
+          .tab-pane#tabWeeklySettings
+            form#changeWeeklySettings.form-horizontal(enctype="multipart/form-data",action="/mime/saveUserBanner",method="POST")
+              div.control-group
+                label.control-label(for="mimeTitle") 常用周报标题
+                div.controls
+                 input(type="text",id="mimeTitle",class="input-large",placeholder="设置常用发报标题")
+                 span.help-inline 现在是：#{setting.myTitle ? setting.myTitle : '你还没设置呢'}
+              div.control-group
+                label.control-label(for="userBanner") 常用背景图片
+                div.controls
+                 div.input-append.fileupload.fileupload-new(data-provides="fileupload") <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">选择图片</span><span class="fileupload-exists">换一个</span><input type="file" name="userBanner" id="userBanner"/></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">删掉</a>
+                  input(type="submit",value="上传图片",id="uploadUserBanner").btn
+                 - if (setting.myImgUrl !== '')
+                    span.help-inline 现在是：<img src="#{setting.myImgUrl}" title="<img src='#{setting.myImgUrl}' />" class="mime-img-preview" />
+          .tab-pane#tabContacts
+            form#changeContacts.form-horizontal(action="/mime/saveSetting",method="POST")
+              div.control-group
+                label.control-label(for="mimeEmail") 我的邮箱
+                div.controls
+                 input(type="text",id="mimeEmail",class="input-large",placeholder="设置我的邮箱")
+                 span.help-inline 现在是：#{setting.myEmail ? setting.myEmail : '你还没设置呢'}
+              div.control-group
+                label.control-label(for="mimeSendToList") 常用收件人
+                div.controls
+                 div.input-append
+                  - if (setting.sendToGroup.length)
+                     ul.email-list.clearfix
+                      - each u in setting.sendToGroup
+                       li= u
+                  - else
+                     div.help-inline(style="margin:5px 0 12px;padding:0;display:block !important;") 暂无常用收件人
+                div.controls.send-to-list
+                 div.input-append
+                  input(type="text",id="mimeSendToList",class="input-large boss-email",placeholder="老板或上司邮箱")
+                  a.add-one.btn(href="javascript:void(0);") <i class="icon-plus"></i>
+       div.control-group
+        div.controls
+         a.save-btn.btn.btn-success(href="javascript:void(0);",id="saveProfile") <i class="icon-ok"></i> 保存设置
+         a.btn.btn-link(href="../mime",style="margin-left:8px;") 不改了
+block js
+ script(src='/javascripts/trello-client.js')
+ script(src='/javascripts/bs/bootstrap-fileupload.js')
+ script(src='/javascripts/bs/bootstrap-tab.js')
+ script
+  $(function () {
+    $('.mime-img-preview').tooltip({placement:"right"});
+    $('#settingTabs a:first').tab('show');
+    $('#settingTabs a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+  });
+ script(src='/javascripts/mime.js')

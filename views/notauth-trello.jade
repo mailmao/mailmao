@@ -1,0 +1,11 @@
+extends layout
+
+block content
+ div.span12.not-auth
+  div.entry
+   div.text.clearfix
+    div.desc 请先授权数据源
+     a#vTrello.trello(href="javascript:void(0);") Trello
+block js
+ script(src='https://api.trello.com/1/client.js?key=01ed33a0fe0a76f9e607b179659ff8dd')
+ script(src='/javascripts/mime.js') 
