@@ -3,6 +3,8 @@ backup.*
 邮差猫.sublime-project
 邮差猫.sublime-workspace
 lib/config.js
+lib/daily.js
+lib/pub-weibo.js
 cardsHtml
 biz.js
 appinfo.md
