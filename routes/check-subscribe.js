@@ -1,5 +1,5 @@
 // check-subscribe.js
-var md5 = require('md5'),
+var md5 = require('../lib/md5.js'),
 	async = require('async'),
 	dbModel = require('../models.js'),
 	user = dbModel.user,

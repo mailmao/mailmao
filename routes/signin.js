@@ -2,7 +2,7 @@ var async = require('async'),
 	dbModel = require('../models.js'),
 	user = dbModel.user,
 	errHandler = require('../lib/error.js'),
-	api = require('api');
+	api = require('../lib/api.js');
 	weibo = require('../lib/config.js')('weibo');
 
 module.exports = function(req, res) {

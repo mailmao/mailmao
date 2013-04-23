@@ -1,5 +1,5 @@
-var UPYun = require('upyun').UPYun,
-	md5 = require('md5'),
+var UPYun = require('../lib/upyun.js').UPYun,
+	md5 = require('../lib/md5.js'),
 	dbModel = require('../models.js'),
 	user = dbModel.user,
 	fs = require('fs'),

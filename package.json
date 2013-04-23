@@ -8,6 +8,15 @@
   "dependencies": {
     "express": "*",
     "jade": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "mongoose":"*",
+    "connect-mongo": "*",
+    "moment": "*",
+    "nodemailer": "*",
+    "async": "*",
+    "markdown": "*",
+    "request": "*",
+    "underscore": "*",
+    "colors": "*"
   }
 }

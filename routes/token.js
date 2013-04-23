@@ -1,7 +1,7 @@
 var async = require('async'),
 	dbModel = require('../models.js'),
 	user = dbModel.user,
-	api = require('api'),
+	api = require('../lib/api.js'),
 	_ = require('underscore');
 
 module.exports = function(req, res) {
