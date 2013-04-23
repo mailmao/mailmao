@@ -3,7 +3,7 @@
 邮差猫 Mailmao
 ==========
 
-基于Trello的周报发送服务
+基于Trello的周报发送服务，采用以下技术构建：
 
 - Node/Express
 - mongodb
@@ -12,7 +12,7 @@
 配置
 ==========
 
-配置文件地址在 `./lib/config.js` 中，默认为空。
+配置文件地址在 `./lib/config-sample.js` 中，默认为空，填写后请重命名为config.js才能运行。
 
 本地测试
 ==========
