@@ -1,6 +1,6 @@
 ![](http://mailmao.com/images/logo-new.png)
 
-邮差猫 Mailmao
+[邮差猫 Mailmao](http://mailmao.com)
 ==========
 
 基于Trello的周报发送服务，采用以下技术构建：
