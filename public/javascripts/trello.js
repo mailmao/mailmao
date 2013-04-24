@@ -16,6 +16,8 @@ $(document).ready(function() {
 		var title = $(this).parents('.trello').find('h3.title');
 		$(this).text('正在授权...')
 		requestToken(function(data) {
+			console.log(data);
+			console.log(Trello.token());
 			$.post("/mime/saveToken", {
 				token: Trello.token()
 			}, function(data) {

@@ -1,6 +1,6 @@
 {
   "name": "mailmao",
-  "version": "1.5",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "start": "node app"

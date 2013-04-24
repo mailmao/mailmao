@@ -1,28 +1,27 @@
 var async = require('async'),
-	dbModel = require('../models.js'),
+	dbModel = require('../models'),
 	user = dbModel.user,
-	api = require('../lib/api.js'),
+	api = require('../lib/api'),
+	config = require('../lib/config')
 	_ = require('underscore');
 
 module.exports = function(req, res) {
 
 	if(req.session.uid) {
-
 		var token = req.body.token;
-
 		async.waterfall([
 
 		function(callback) {
 
 			// 获取到trello用户信息
-			api('GET', 'https://api.trello.com/1/tokens/' + token + '/member?key=01ed33a0fe0a76f9e607b179659ff8dd', function(info) {
+			api('GET', 'https://api.trello.com/1/tokens/' + token + '/member?key=' + config('trello').key, function(info) {
 				callback(null, info)
 			});
 
 		}, function(info, callback) {
 
 			// 获取用户所在板块信息
-			api('GET', 'https://api.trello.com/1/members/' + info.id + '/boards?filter=open&fields=name&key=01ed33a0fe0a76f9e607b179659ff8dd&token=' + token, function(boards) {
+			api('GET', 'https://api.trello.com/1/members/' + info.id + '/boards?filter=open&fields=name&key=' + config('trello').key + '&token=' + token, function(boards) {
 				console.log(boards);
 				callback(null, info, boards);
 			});

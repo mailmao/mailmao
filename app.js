@@ -59,45 +59,29 @@ app.locals = {
 	desc: _config('desc'),
 	href: _config('root'),
 	version: _config('version'),
-	root: __dirname
+	root: __dirname,
+	trelloKey: _config('trello').key
 }
 
-var logout = require('./routes/logout.js'),
-	index = require('./routes/index.js'),
-	about = require('./routes/about.js'),
-	mime = require('./routes/mime.js'),
-	trello = require('./routes/trello.js'),
-	updateSetting = require('./routes/setting-update.js'),
-	subscribeIndex = require('./routes/subscribe-page.js'),
-	subscribe = require('./routes/subscribe.js'),
-	unsubscribe = require('./routes/unsubscribe.js'),
-	checksubscribe = require('./routes/check-subscribe.js'),
-	signin = require('./routes/signin.js'),
-	html = require('./routes/html.js'),
-	send = require('./routes/send.js'),
-	update = require('./routes/update.js'),
-	setting = require('./routes/setting.js'),
-	upload = require('./routes/upload.js'),
-	token = require('./routes/token.js');
+app.get('/', require('./routes/index'));
+app.get('/signin', require('./routes/signin'));
+app.get('/logout', require('./routes/logout'));
+app.get('/about', require('./routes/about'));
+app.get('/trello', require('./routes/trello'));
+app.get('/mime', require('./routes/mime'));
+app.get('/mime/update', require('./routes/setting-update'));
+app.get('/:uid/subscribe', require('./routes/subscribe-page'));
+app.get('/:uid/subscribe/:email', require('./routes/subscribe'));
+app.get('/:uid/subscribe/:email/check', require('./routes/check-subscribe'));
+app.get('/:uid/unsubscribe/:email', require('./routes/unsubscribe'));
 
-app.get('/', index);
-app.get('/signin', signin);
-app.get('/logout',logout);
-app.get('/about',about);
-app.get('/trello', trello);
-app.get('/mime', mime);
-app.get('/mime/update',updateSetting);
-app.get('/:uid/subscribe',subscribeIndex);
-app.get('/:uid/subscribe/:email',subscribe);
-app.get('/:uid/subscribe/:email/check',checksubscribe);
-app.get('/:uid/unsubscribe/:email',unsubscribe);
-
-// app.post('/creatHtml',html);
-app.post('/update', update);
-app.post('/send', send);
-app.post('/upload',upload);
-app.post('/mime/saveSetting',setting);
-app.post('/mime/saveToken',token);
+// app.post('/creatHtml', require('./routes/html'));
+app.post('/update', require('./routes/update'));
+app.post('/send', require('./routes/send'));
+app.post('/upload', require('./routes/upload'));
+app.post('/mime/saveSetting', require('./routes/setting'));
+app.post('/mime/saveToken', require('./routes/token'));
 
 // run
-http.createServer(app).listen(app.get('port'));
+var server = http.createServer(app)
+server.listen(app.get('port'));
