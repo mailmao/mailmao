@@ -5,6 +5,7 @@ backup.*
 lib/config.js
 lib/daily.js
 lib/pub-weibo.js
+public/stylesheets/style.css
 cardsHtml
 biz.js
 appinfo.md
@@ -15,5 +16,6 @@ thumb
 uploads
 *.zip
 views/biz
+views/weekly
 views/weekly/*.log
 *.log
