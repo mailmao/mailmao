@@ -15,4 +15,5 @@ thumb
 uploads
 *.zip
 views/biz
-views/weekly
+views/weekly/*.log
+*.log

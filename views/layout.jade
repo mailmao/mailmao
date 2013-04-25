@@ -4,6 +4,8 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='shortcut icon',type='image/x-icon',href='/images/favicon.ico')
+    script
+      var trelloKey = !{JSON.stringify(trelloKey)};
   body(class="#{title == '邮差猫'?'home':'not-home'}")
    block header
      div#hd.clearfix

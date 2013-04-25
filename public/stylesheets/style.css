@@ -558,7 +558,6 @@ a:hover {
   margin-top: 8px;
 }
 .tools .hidden-tools .img-layout a {
-  font-size: 14px;
   color: #999 !important;
   display: inline;
   font-size: 14px;
@@ -577,7 +576,6 @@ a:hover {
 }
 .tools .hidden-tools .title {
   font-size: 14px;
-  font-weight: normal;
   margin: 0px 0px 10px;
   font-weight: normal;
   color: #999;
@@ -897,7 +895,7 @@ a.save-btn i {
   color: #000 !important;
 }
 .setting-tab .nav .active i {
-  background-image: url(data:undefinedundefinedundefined[90m/img/glyphicons-halflings.png[39m) !important;
+  background-image: url(/img/glyphicons-halflings.png) !important;
 }
 .biz-nav {
   float: right !important;
@@ -923,7 +921,7 @@ a.save-btn i {
 .biz .home .fans .title .v {
   font-size: 12px;
   padding-left: 24px;
-  background: url(data:undefinedundefinedundefined[90m/images/v.png[39m) no-repeat 3px center;
+  background: url(/images/v.png) no-repeat 3px center;
   margin-left: 10px;
   color: #999;
   font-weight: normal;
