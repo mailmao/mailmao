@@ -1,0 +1,140 @@
+@charset "utf-8"; 
+
+/* 
+Tomato Pack CSS Reset
+*/
+
+/* 通用 CSS reset 样式重写 */
+
+html,body,blockquote,hr,dl, dt, dd,ul,ol,li,pre,form,fieldset,legend,button, input, textarea,td,th {
+margin:0;
+padding:0;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+margin-top:0;
+}
+
+flieldset,img{
+border:0;
+}
+
+table{
+border-collapse:collapse;
+border-spacing:0;
+}
+
+caption,th,td{
+text-align:left;
+vertical-align:top;
+font-weight:normal;
+}
+
+legend{
+color:#000;
+}
+
+button,input,textarea,select{
+font-size:100%;  /* 使得表单元素在 ie 下能继承字体大小 */
+}
+
+ul,ol {
+list-style:none;
+}
+
+abbr ,acronym{
+border-bottom: 1px dotted #ddd;
+cursor: help;
+}
+
+sup{
+vertical-align:text-top;
+}
+
+sub{
+vertical-align:text-bottom;
+}
+
+/* 重置文本格式元素 */
+
+body,button, input, select, textarea /* for ie */ {
+font:12px/1.5 tahoma, Verdana, Arial, Helvetica, "STXihei", simsun, sans-serif;
+}
+
+address, cite, dfn, em, var { 
+font-style: normal; 
+} 
+
+code, kbd, pre, samp { 
+font-family: courier new, courier, monospace; 
+}
+
+small {
+font-size: 12px; 
+} 
+
+a {
+text-decoration: none; 
+}
+
+a:hover {
+text-decoration: underline; 
+}
+
+/* KISSY CSS Reset for post */
+
+.post-reset {
+    font: 14px/1.8 verdana, tahoma, arial,"STXihei", simsun,sans-serif;
+}
+.post-reset ul, .post-reset ol, .post-reset dl {
+	margin-left: 2em;
+}
+.post-reset ol li {
+	list-style: decimal outside;
+}
+.post-reset ul li {
+	list-style: disc outside;
+}
+.post-reset dl dd {
+	margin-left: 1em;
+}
+.post-reset th, .post-reset td {
+	padding: .5em;
+}
+.post-reset caption {
+	margin-bottom: .5em;
+}
+.post-reset p, .post-reset fieldset, .post-reset table, .post-reset pre {
+	margin-bottom: 2px !important;
+}
+
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+
+.clearfix:before,
+.clearfix:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+  zoom: 1;
+}
+
+/* others */
+.floatl{ float:left; } 
+.floatr{ float:right; }
+.hidden {display: none;}
+.invisible {visibility: hidden;}

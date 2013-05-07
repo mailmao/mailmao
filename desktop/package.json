@@ -1,0 +1,12 @@
+{
+  "name": "Mailmao Desktop App",
+  "description": "从此爱上写周报",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "position": "center",
+    "width": 1100,
+    "height": 700
+  }
+}
