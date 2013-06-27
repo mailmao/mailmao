@@ -22,7 +22,7 @@ module.exports = function(req, res) {
 
 			// 获取用户所在板块信息
 			api('GET', 'https://api.trello.com/1/members/' + info.id + '/boards?filter=open&fields=name&key=' + config('trello').key + '&token=' + token, function(boards) {
-				console.log(boards);
+				// console.log(boards);
 				callback(null, info, boards);
 			});
 			

@@ -3,7 +3,8 @@ var async = require('async'),
 	user = dbModel.user,
 	errHandler = require('../lib/error.js'),
 	api = require('../lib/api.js');
-	weibo = require('../lib/config.js')('weibo');
+	weibo = require('../lib/config.js')('weibo'),
+	_config = require('../lib/config.js');
 
 module.exports = function(req, res) {
 
@@ -20,6 +21,7 @@ module.exports = function(req, res) {
 				var uid = data.uid;
 				callback(null, uid, token);
 			} else {
+				// console.log(data)
 				res.send(errHandler('wb'))
 			}
 		});
@@ -38,7 +40,7 @@ module.exports = function(req, res) {
 							req.session['uid'] = doc._id;
 							req.session['wbToken'] = doc.weibo.token;
 							req.session['user'] = doc.weibo.info;
-							res.redirect('/');
+							res.redirect(_config('root'));
 						} else {
 							res.send(errHandler('db'));
 						}
@@ -78,7 +80,7 @@ module.exports = function(req, res) {
 					req.session['uid'] = newUser._id;
 					req.session['wbToken'] = newUser.weibo.tokne;
 					req.session['user'] = newUser.weibo.info;
-					res.redirect('/');
+					res.redirect(_config('root'));
 
 				} else {
 					res.send(errHandler('db'))
@@ -89,7 +91,7 @@ module.exports = function(req, res) {
 	});
 
   } else {
-  	res.redirect('/')
+  	res.redirect(_config('root'));
   }
 
 }

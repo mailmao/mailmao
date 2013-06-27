@@ -4,7 +4,8 @@ var dbModels = require('../models.js'),
 	_ = require('underscore'),
 	async = require('async'),
 	updateTrelloCache = require('../lib/update-trello-cache.js'),
-	weibo = require('../lib/config.js')('weibo');
+	weibo = require('../lib/config.js')('weibo'),
+	root = require('../lib/config.js')('root');
 
 // index page
 module.exports = function(req, res, next) {
@@ -42,7 +43,7 @@ module.exports = function(req, res, next) {
 				}
 			} else {
 				// 如果用户没授权trello
-				res.redirect('/trello');
+				res.redirect(root+'/trello');
 			}
 		}, function(stat,userInfo, cache, callback) {
 			if(stat == 'first') {

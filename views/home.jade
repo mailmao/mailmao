@@ -24,7 +24,7 @@ block content
             a.send.btn.btn-primary.btn-send(href="javascript:void(0)",title="将要发送给所有常用收件人") <i class="icon-envelope"></i> 发送周报
           //- 选择要输出的板块
           div.boards
-            - if (boards.length > 0)
+            - if (typeof(boards) != 'undefined' && boards.length > 0)
               - each b in boards
                 a(href="javascript:void(0)",data-id="#{b.id}",class="#{b.id == outputBoardID ? 'cur' : ''} select-boards").board-name 
                     - if (b.id == outputBoardID)
@@ -33,6 +33,8 @@ block content
                     - else
                       i.icon-circle-blank 
                       span #{b.name}
+            - else
+                p 你还没有板块，或者邮差猫在更新过程中发生错误，请点击下方的更新按钮更新板块信息
           div.trello
             a.update-trello(href="javascript:void(0);") 
               i.icon-exchange
