@@ -1,8 +1,6 @@
-![](https://a248.e.akamai.net/camo.github.com/82f72c3bd9441ac137023dbb4d39235fd700fa6a/687474703a2f2f6d61696c6d616f2e636f6d2f696d616765732f6c6f676f2d6e65772e706e67)
+![](http://ww3.sinaimg.cn/large/61ff0de3jw1e6jccxfhgvj202s039t8j.jpg)
 
 ### [邮差猫 Mailmao](http://mailmao.com)
-
-<img src="http://ww4.sinaimg.cn/mw1024/61ff0de3gw1dwwaenqxwqj.jpg" style="display:block;margin: 10px auto;box-shadow: 0px 0px 20px #efefef;" />
 
 基于Trello的周报发送服务，采用以下技术构建：
 
@@ -28,3 +26,7 @@
 
 1. 安装依赖：`npm install` 
 2. 运行服务：`node app`
+
+### 效果预览(0.0.1)
+
+![](http://ww4.sinaimg.cn/mw1024/61ff0de3gw1dwwaenqxwqj.jpg)
