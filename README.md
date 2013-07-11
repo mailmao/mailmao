@@ -29,4 +29,4 @@
 
 ### 效果预览(0.0.1)
 
-![](http://ww4.sinaimg.cn/mw1024/61ff0de3gw1dwwaenqxwqj.jpg)
+![](http://ww3.sinaimg.cn/large/61ff0de3jw1e6jcdq2fetj20dw0bg0uc.jpg)
