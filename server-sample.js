@@ -23,7 +23,7 @@ new Server({
         from: '邮差猫 <xxxx@mailmao.com>'
     },
     upyun: {
-        cave: 'upyun空间名',
+        bucket: 'upyun空间名',
         user: 'upyun空间管理员',
         password: 'upyun空间管理员密码',
         baseUrl: 'upyun空间三级域名'
