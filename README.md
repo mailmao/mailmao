@@ -1,7 +1,7 @@
-![logo](http://ww3.sinaimg.cn/large/61ff0de3gw1e8xjt122lpj201e01mmwy.jpg) [邮差猫](http://mailmao.com)
+![logo](http://ww3.sinaimg.cn/large/61ff0de3gw1e8xjt122lpj201e01mmwy.jpg) Mailmao ![](https://badge.fury.io/js/mailmao.png)
 ---
 
-基于 Trello 的邮件发送服务，结合 Trello 的日程管理，发送排版优雅的邮件，是您居家旅行写代码发周报必备工具。
+[邮差猫](http://mailmao.com) 是基于 Trello 的邮件发送服务，结合 Trello 的日程管理，发送排版优雅的邮件，居家旅行发周报必备工具。
 
 ![screenshot](http://ww1.sinaimg.cn/large/61ff0de3gw1e8xjy1tqpgj20eo0c8wfi.jpg)
 
