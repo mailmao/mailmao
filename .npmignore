@@ -13,4 +13,4 @@ views/weekly
 views/weekly/*.log
 *.log
 server.js
-uploads
+uploads/*

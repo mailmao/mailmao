@@ -14,6 +14,12 @@ $ npm install mailmao
 
 签出代码库，填好配置文件
 ````
+// 使用npm安装（推荐）
+$ npm install mailmao
+$ cp ./node_modules/mailmao/server-sample.js ./server.js
+$ vi server.js // 将require('./app') 修改成 require('mailmao');
+
+// 使用git clone
 $ git clone https://github.com/turingou/Mailmao.git
 $ cd Mailmao
 $ cp server-sample.js server.js
