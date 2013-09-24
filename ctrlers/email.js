@@ -4,14 +4,15 @@ var nodemailer = require("nodemailer"),
     jade = require('jade'),
     fs = require('fs'),
     moment = require('moment'),
-    zh = require('../lib/zh-cn.js');
+    zh = require('../lib/zh-cn.js'),
+    path = require('path');
 
 moment.lang('zh-cn',zh);
 
 module.exports = function(tpl, params, callback) {
     
     var sender = params.sender,
-        tplcontent = fs.readFileSync('./views/templates/' + tpl, 'utf8'),
+        tplcontent = fs.readFileSync(path.resolve( __dirname,'../views/templates/' + tpl), 'utf8'),
         jadeCompile = jade.compile(tplcontent),
         vars = params.mail;
 
