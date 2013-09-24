@@ -3,7 +3,7 @@
 
 [邮差猫](http://mailmao.com) 是基于 Trello 的邮件发送服务，结合 Trello 的日程管理，发送排版优雅的邮件，居家旅行发周报必备工具。
 
-![screenshot](http://ww1.sinaimg.cn/large/61ff0de3gw1e8xjy1tqpgj20eo0c8wfi.jpg)
+![screenshot](http://ww1.sinaimg.cn/large/61ff0de3gw1e8xk8vie3dj20w00nfjuo.jpg)
 
 #### 如何安装
 ````
