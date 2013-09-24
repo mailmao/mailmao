@@ -3,85 +3,120 @@
 //   / __ `__ \/ __ `/ / / __ `__ \/ __ `/ __ \
 //  / / / / / / /_/ / / / / / / / / /_/ / /_/ /
 // /_/ /_/ /_/\__,_/_/_/_/ /_/ /_/\__,_/\____/ 
+// 
+// @author: [turingou](http://guoyu.me)
+// @description : Mail pusher based on Trello/Express/Nodemailer
 
-/**
- *
- * @author: yu.gy
- * @version [1.5]
- * @description : 从此爱上写周报
- *
- **/
+var Server = function(params) {
 
-var express = require('express'),
-	http = require('http'),
-	https = require('https'),
-	fs = require('fs'),
-	path = require('path'),
-	MongoStore = require('connect-mongo')(express);
+    var express = require('express'),
+        path = require('path'),
+        MongoStore = require('connect-mongo')(express),
+        pkg = require('./pkg'),
+        sys = require('./package.json'),
+        self = this;
 
-var app = express();
-var MemStore = express.session.MemoryStore;
+    var app = express();
+    var MemStore = express.session.MemoryStore;
 
-app.configure(function() {
-	app.set('port', process.env.PORT || 8080);
-	app.set('views', __dirname + '/views');
-	app.set('view engine', 'jade');
-	app.use(express.favicon());
-	app.use(express.logger('dev'));
-	app.use(express.bodyParser({
-		keepExtensions: true,
-		uploadDir: path.join(__dirname, '/uploads')
-	}));
-	app.use(express.methodOverride());
-	app.use(express.cookieParser('your secret here'));
-	app.use(express.session({
-		secret: 'mailmao',
-		store: new MongoStore({
-			db: 'mailmao',
-			collection: 'sessions'
-		})
-	}));
-	app.use(app.router);
-	app.use(require('less-middleware')({
-		src: __dirname + '/public'
-	}));
-	app.use(express.static(path.join(__dirname, 'public')));
-});
+    pkg.set('/database.json', params.database);
 
-app.configure('development', function() {
-	app.use(express.errorHandler());
-});
+    var home = require('./routes/index'),
+        sign = require('./routes/sign'),
+        about = require('./routes/about'),
+        trello = require('./routes/trello'),
+        user = require('./routes/user'),
+        cn = require('./lib/zh-cn'),
+        moment = require('moment'),
+        errhandler = require('./lib/error'),
+        duoshuo = require('./routes/duoshuo');
 
-var _config = require('./lib/config.js');
+    var apis = {
+        update: require('./routes/update'),
+        send: require('./routes/send'),
+        upload: require('./routes/upload'),
+        setting: require('./routes/setting'),
+        token: require('./routes/token')
+    };
 
-app.locals = {
-	title: _config('title'),
-	desc: _config('desc'),
-	href: _config('root'),
-	version: _config('version'),
-	root: __dirname,
-	trelloKey: _config('trello').key
+    app.set('env', params.env ? params.env : 'development');
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.use(express.favicon());
+    app.use(express.logger('dev'));
+    app.use(express.limit('20mb'));
+    app.use(express.bodyParser({
+        keepExtensions: true,
+        uploadDir: path.join(__dirname, '/uploads')
+    }));
+    app.use(express.methodOverride());
+    app.use(express.cookieParser(params.database.name));
+    app.use(express.session({
+        secret: params.database.name,
+        store: new MongoStore({
+            db: params.database.name,
+            collection: 'sessions'
+        })
+    }));
+    app.use(function(req, res, next) {
+        if (!res.locals.Server) {
+            res.locals.Server = self;
+        }
+        next();
+    });
+    app.use(require('less-middleware')({
+        src: __dirname + '/public'
+    }));
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(app.router);
+
+    // errhandler
+    app.use(errhandler.logger);
+    app.use(errhandler.xhr);
+    app.use(errhandler.common);
+
+    moment.lang('zh-cn', cn);
+    app.get('*', function(req, res, next) {
+        res.locals.moment = moment;
+        next();
+    });
+
+    app.locals.sys = sys;
+    app.locals.site = params;
+
+    // pages
+    app.get('/', sign.passport, home);
+    app.get('/signin', sign.signin);
+    app.get('/signout', sign.signout);
+    app.get('/about', sign.passport, about);
+    app.get('/sync', sign.check, duoshuo.page);
+    app.get('/trello', sign.check, trello);
+    app.get('/mime', sign.check, user.home);
+    app.get('/mime/update', sign.check, user.update);
+
+    // apis
+    app.post('/update', sign.checkJSON, apis.update);
+    app.post('/send', sign.checkJSON, apis.send);
+    app.post('/upload', sign.checkJSON, apis.upload);
+    app.post('/sync', sign.check, duoshuo.sync);
+    app.post('/mime/update', sign.checkJSON, apis.setting); // saveSetting
+    app.post('/mime/update/token', sign.checkJSON, apis.token); // savetoken
+
+    this.app = app;
+    this.params = params;
 }
 
-app.get('/', require('./routes/index'));
-app.get('/signin', require('./routes/signin'));
-app.get('/logout', require('./routes/logout'));
-app.get('/about', require('./routes/about'));
-app.get('/trello', require('./routes/trello'));
-app.get('/mime', require('./routes/mime'));
-app.get('/mime/update', require('./routes/setting-update'));
-app.get('/:uid/subscribe', require('./routes/subscribe-page'));
-app.get('/:uid/subscribe/:email', require('./routes/subscribe'));
-app.get('/:uid/subscribe/:email/check', require('./routes/check-subscribe'));
-app.get('/:uid/unsubscribe/:email', require('./routes/unsubscribe'));
+Server.prototype.run = function(port) {
+    var self = this,
+        http = require('http'),
+        app = self.app;
+    if (port && !isNaN(parseInt(port))) {
+        app.set('port', parseInt(port));
+    } else {
+        app.set('port', 3000);
+    }
+    app.locals.href = (app.get('env') == 'development') ? 'http://localhost:' + app.get('port') : app.locals.site.url;
+    http.createServer(app).listen(app.get('port'));
+}
 
-// app.post('/creatHtml', require('./routes/html'));
-app.post('/update', require('./routes/update'));
-app.post('/send', require('./routes/send'));
-app.post('/upload', require('./routes/upload'));
-app.post('/mime/saveSetting', require('./routes/setting'));
-app.post('/mime/saveToken', require('./routes/token'));
-
-// run
-var server = http.createServer(app)
-server.listen(app.get('port'));
+exports.server = Server;

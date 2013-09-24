@@ -1,11 +1,29 @@
 {
   "name": "mailmao",
-  "version": "0.1.5",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Mail pusher based on Trello/Express/Nodemailer",
+  "main": "app.js",
+  "author": "turing <o.u.turing@gmail.com>",
+  "license": "MIT",
   "scripts": {
-    "start": "node app"
+    "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turingou/Mailmao.git"
+  },
+  "bugs": {
+    "url": "https://github.com/turingou/Mailmao/issues"
+  },
+  "keywords": [
+    "mail",
+    "email",
+    "trello",
+    "daily",
+    "weekly"
+  ],
   "dependencies": {
+    "duoshuo": "*",
     "express": "*",
     "jade": "*",
     "less-middleware": "*",
@@ -14,9 +32,10 @@
     "moment": "*",
     "nodemailer": "*",
     "async": "*",
-    "markdown": "*",
-    "request": "*",
+    "marked": "*",
+    "highlight.js": "*",
+    "beer": "*",
     "underscore": "*",
-    "colors": "*"
+    "MD5": "*"
   }
 }

@@ -1,4 +1,4 @@
-style
+style.
    .desc img {
     border:1px solid #ddd;
     padding:3px;
@@ -45,7 +45,7 @@ table(border="0",cellpadding="0",cellspacing="0",height="100%",width="100%")
                               tbody
                                 tr
                                   td
-                                    img.avatar(src="#{user.profile_image_url}",style="width:50px;height:50px;border-radius:50px;margin-left:15px;")
+                                    img.avatar(src="#{user.avatar}",style="width:50px;height:50px;border-radius:50px;margin-left:15px;")
                           td(valign="top",width="450")
                             table(border="0",cellpadding="0",cellspacing="0",width="100%")
                               tbody
@@ -62,7 +62,7 @@ table(border="0",cellpadding="0",cellspacing="0",height="100%",width="100%")
                               tbody
                                 tr
                                   td(valign="middle")
-                                    div.vol(style="font-size:12px;color:#fff;background-color:#17BCC0;") 邮差猫 v#{version}
+                                    div.vol(style="font-size:12px;color:#fff;background-color:#17BCC0;") v#{sys.version}
                                   td(valign="middle")
                                     //- a(href="http://dev.mailmao.com:9000/#{uid}/subscribe",style="color") 订阅这个频道
                                     img(src="http://pic.alipayobjects.com/e/201209/1CGPoVRMHF.png",style="margin-left:3px;")
@@ -127,4 +127,4 @@ table(border="0",cellpadding="0",cellspacing="0",height="100%",width="100%")
                             - else 
                               li.no-data Trello数据抓取失败，请尝试判断点击右方的更新板块数据按钮以获取最新数据。
                 tr 
-                  td(align="left",style="clear:both;padding:20px 0px;color:#999;margin-top:1px;font-size:12px;") &copy; 2012 !{title} | 邮差猫 v#{version} | Designed by <a href="http://guoyu.me">GuoYu</a>
+                  td(align="left",style="clear:both;padding:20px 0px;color:#999;margin-top:1px;font-size:12px;") &copy; #{new Date().getFullYear()} #{site.name} | #{sys.name} v#{sys.version} | Designed by <a href="http://guoyu.me">GuoYu</a>

@@ -1,11 +1,8 @@
-// trello
+// 引导用户授权trello
 module.exports = function(req, res, next) {
-	if(req.session.uid) {
-		// 引导用户授权trello
-		res.render('trello', {
-			user: req.session.user
-		})
-	} else {
-		res.redirect('/')
-	}
+    if (res.locals.user.nickname) {
+        res.render('trello');
+    } else {
+        res.redirect('/sync');
+    }
 }

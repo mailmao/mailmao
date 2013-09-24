@@ -1,0 +1,32 @@
+extends layout
+
+block title
+    | 多说数据同步中
+
+block content
+    .container
+        .row
+          .span12
+            .trello.clearfix
+                h3.title.syncing 正在同步您的数据，请勿关闭本页面...
+    .ds-demo.clearfix.hide
+        .ds-thread
+
+block js
+    script.
+        var duoshuoQuery = {
+            short_name: "#{site.duoshuo.short_name}",
+            sso: { 
+               login: "#{href}/signin/",
+               logout: "#{href}/signout/"
+            }
+        };
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    script(src="/javascripts/sync.js")

@@ -1,44 +1,38 @@
-var UPYun = require('../lib/upyun.js').UPYun,
-	md5 = require('../lib/md5.js'),
-	dbModel = require('../models.js'),
-	user = dbModel.user,
+var md5 = require('MD5'),
 	fs = require('fs'),
-	upyunInfo = require('../lib/config.js')('upyun');
+	media = require('../ctrlers/media'),
+	user = require('../ctrlers/user');
 
-var upyun = new UPYun(upyunInfo.cave, upyunInfo.user, upyunInfo.password);
-var cave = upyunInfo.baseUrl;
-
-module.exports = function(req, res) {
-
-  if (req.session.uid) {
-	var fileContent = fs.readFileSync(req.files.uploadedImg.path);
-	var fileName = req.files.uploadedImg.name;
-	var md5Str = md5(fileContent);
-	var link = req.session.uid + '-' + md5(req.files.uploadedImg.name) + '.png';
-	upyun.setContentMD5(md5Str);
-	upyun.setFileSecret('bac');
-	upyun.writeFile('/banners/' + link, fileContent, false, function(err, data) {
-		if(!err) {
-			user.findById(req.session.uid).exec(function(err, doc) {
-				doc.setting.banner = encodeURI(cave + link);
-				doc.save(function() {
-					res.json({
-				        stat:'ok',
-				        msg: '同步成功!',
-				        url: cave + link
-				  	});
-				});
-			});
-		} else {
-			res.json({
-				stat: 'error'
-			});
-		}
-	});
-  } else {
-  	res.json({
-		stat: 'error',
-		msg: '请先登录'
-	});
-  }
+module.exports = function(req, res, next) {
+	if (req.files.uploadedImg) {
+		var upyunInfo = res.locals.Server.app.locals.site.upyun;
+		var file = {
+			name: res.locals.user._id + '-' + md5(req.files.uploadedImg.name) + '.png',
+			content: fs.readFileSync(req.files.uploadedImg.path)
+		};
+		media.upyun(upyunInfo, file, function(err, data) {
+			if (!err) {
+				user.queryById(res.locals.user._id, function(err, u) {
+					if (!err) {
+						u.setting.banner = encodeURI(upyunInfo.baseUrl + file.name);
+						u.save(function(err) {
+							if (!err) {
+								res.json({
+									stat: 'ok',
+									msg: '同步成功!',
+									url: upyunInfo.baseUrl + file.name
+								});
+							} else {
+								next(err);
+							}
+						});
+					} else {
+						next(err);
+					}
+				})
+			} else {
+				next(err);
+			}
+		});
+	}
 }

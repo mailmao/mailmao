@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    #cnt.clearfix.signin
+        .container
+            #icnt.row.clearfix
+                .span12.not-auth
+                    .error.clearfix
+                        .text.clearfix
+                            h2.title #{code}
+                            p.msg #{error}

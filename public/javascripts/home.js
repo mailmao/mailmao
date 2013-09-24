@@ -186,7 +186,7 @@ $(document).ready(function() {
 		var btn = $(this);
 		$(this).text('正在更新...')
 		requestToken(function(data) {
-			$.post("/mime/saveToken", {
+			$.post("/mime/update/token", {
 				token: Trello.token()
 			}, function(data) {
 				if(data.stat == 'ok') {

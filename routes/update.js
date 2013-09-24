@@ -1,80 +1,74 @@
 var async = require('async'),
-	dbModel = require('../models.js'),
-	user = dbModel.user,
-	errHandler = require('../lib/error.js'),
-	updateTrelloCache = require('../lib/update-trello-cache.js'),
+	trello = require('../lib/trello'),
+	user = require('../ctrlers/user'),
 	_ = require('underscore');
 
-module.exports = function(req, res) {
-	if(req.session.uid) {
+var check = function(bid, boards) {
+	var b;
+	_.each(boards, function(board) {
+		if (board.id == bid) {
+			b = board;
+		}
+	});
+	return b;
+};
 
-		async.waterfall([
+// 更新某个指定板块的cache
+module.exports = function(req, res, next) {
 
-			function(callback) {
-				user.findById(req.session.uid).exec(function(err, doc) {
-					if(!err) {
-						var trelloToken = doc.trello.token;
-						var uid = doc._id;
-						var bid = req.body.bid;
-						if(bid != null) {
-							var boards = doc.trello.info.boards;
-							var b = {};
-							_.each(boards, function(board) {
-								if(board.id == bid) {
-									b['id'] = board.id;
-									b['name'] = board.name;
-								}
-							});
-							// 如果用户没有这个板块，id就会是undefined
-							if (typeof(b.id) != 'undefined') {
-								doc.setting.outputBoard.id = b.id;
-								doc.setting.outputBoard.name = b.name;
-							} // 否则按照原来的默认输出板块更新
-							doc.save(function(err) {
-								if(!err) {
-									callback(null, trelloToken, uid, doc.setting.outputBoard.id)
-								}
-							})
-						} else {
-							callback(null, trelloToken, uid, doc.setting.outputBoard.id);
-						}
+	var uid = res.locals.user._id;
+	var bid = req.body.bid;
+	var key = res.locals.Server.app.locals.site.trello.key;
 
+	async.waterfall([
+		function(callback) {
+			user.read(uid, function(err, u) {
+				if (!err) {
+					if (bid) {
+						var targetBoard = check(bid, u.trello.boards);
+						// 修改默认输出板块为当前指定的板块
+						if (targetBoard) {
+							u.setting.outputBoard.id = targetBoard.id;
+							u.setting.outputBoard.name = targetBoard.name;
+						} // 否则按照原来的默认输出板块更新
+						u.save(function(err) {
+							callback(err, u);
+						});
 					} else {
-						res.json({
-							stat: 'error',
-							msg: errHandler('db')
-						})
+						// 如果没有制定，就按照默认板块更新
+						callback(null, u);
 					}
-				})
-			},
-			function(trelloToken, uid, bid, callback) {
-				updateTrelloCache(bid, trelloToken, function(cache) {
-					user.findById(req.session.uid).exec(function(err, doc) {
-						if(!err && doc) {
-							doc.cache = cache;
-							doc.save(function(err) {
-								if(!err) {
-									res.json({
-										stat: 'ok',
-										msg: '输入板块的内容已经更新完毕...'
-									})
-								} else {
-									res.json({
-										stat: 'err',
-										msg: errorHandler('db')
-									})
-								}
-							})
+				} else {
+					next(err)
+				}
+			});
+		}
+	], function(err, user) {
+		if (!err) {
+			trello.updateCache({
+				bid: user.setting.outputBoard.id,
+				token: user.trello.token,
+				key: key
+			}, function(err, results) {
+				if (!err) {
+					user.trello.cache = results;
+					user.trello.save(function(err) {
+						if (!err) {
+							res.json({
+								stat: 'ok',
+								msg: '输入板块的内容已经更新完毕...'
+							});
+						} else {
+							next(err);
 						}
 					})
-				})
-			}
-		])
+				} else {
+					next(err);
+				}
+			});
+		} else {
+			next(err);
+		}
+	});
 
-	} else {
-		res.json({
-			stat: 'error',
-			msg: 'login first'
-		})
-	}
 }

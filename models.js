@@ -3,86 +3,98 @@
  */
 
 var mongoose = require('mongoose'),
-	db = mongoose.createConnection('localhost', 'mailmao'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	config = require('./database'),
+	db = mongoose.createConnection('localhost', config.name);
 
-// mongodb 配置
-var userModel = new mongoose.Schema({
-	id: {
-		type: String,
-		unique: true
-	},
-	weibo: {
-		token: String,
-		info: {}
+// user model
+var userModel = new Schema({
+	nickname: String,
+    email: String,
+    avatar: String,
+    password: String,
+    phone: String,
+    url: String,
+    type: {
+        type: String,
+        default: 'normal'
+    },
+    created: {
+        type: Date,
+        default: Date.now
+    },
+	duoshuo: {
+		user_id: {
+            type: String,
+            unique: true
+        },
+        access_token: String
 	},
 	trello: {
-		token: String,
-		info: {}
+		type: Schema.Types.ObjectId,
+        ref: 'trello'
 	},
 	setting: {
 		title: {
 			type: String,
-		default:
-			''
+			default: ''
 		},
 		email: {
 			type: String,
-		default:
-			''
+			default: ''
 		},
 		banner: {
 			type: String,
-		default:
-			''
+			default: ''
 		},
 		outputBoard: {
 			name: {
 				type: String,
-			default:
-				''
+				default: ''
 			},
 			id: {
 				type: String,
-			default:
-				''
+				default: ''
 			}
 		}
-	},
-	cache: {
-		cards: {},
-		attrs: {},
-		members: {},
-		checkLists: {}
-	},
-	client: [{
-		type: Schema.Types.ObjectId,
-    	ref: 'client'
-	}]
-});
-
-var clientModel = new mongoose.Schema({
-	email: {
-		type: String,
-		unique: true
-	},
-	pin: String,
-	history: [{
-		type: Schema.Types.ObjectId,
-    	ref: 'history'
-	}]
-});
-
-var historyModel = new mongoose.Schema({
-	type: String,
-	date: Date,
-	desc: String,
-	user: {
-		type: Schema.Types.ObjectId,
-    	ref: 'user'
 	}
-})
+});
+
+// trello cache model
+var trelloModel = new Schema({
+	token: String,
+	lastUpdate: Date,
+    boards: {},
+	info: {},
+	cache: {},
+	html: {},
+	user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }
+});
+
+// media
+var mediaModel = new Schema({
+    name: String,
+    src: String,
+    url: String,
+    cdn: String,
+    type: String,
+    meta: {
+        size: Number,
+        lastModifiedDate: Date
+    },
+    pubdate: {
+        type: Date,
+        default: Date.now
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }
+});
 
 exports.user = db.model('user', userModel);
-exports.client = db.model('client', clientModel);
-exports.history = db.model('history', historyModel);
+exports.trello = db.model('trello', trelloModel);
+exports.media = db.model('media', mediaModel);
