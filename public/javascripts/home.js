@@ -174,6 +174,8 @@ $(document).ready(function() {
 		}, function(data) {
 			if(data.stat == 'ok') {
 				$('.send').removeClass('loading').html('<i class="icon-ok"></i> 发送成功').addClass('btn-success disabled');
+			} else {
+				alert(data.error.toString());
 			}
 		});
 	});
