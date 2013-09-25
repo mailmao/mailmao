@@ -3,9 +3,9 @@ var updateBoard = function(bid, callback) {
 			bid: bid
 		}, function(data) {
 			if(data.stat == 'ok') {
-				callback()
+				callback();
 			} else {
-				alert(data.msg)
+				alert(data.error);
 			}
 		});
 	}

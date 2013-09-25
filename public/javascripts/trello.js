@@ -20,7 +20,7 @@ $(document).ready(function() {
 				token: data
 			}, function(result) {
 				if(result.stat == 'ok') {
-					title.text('已成功绑定trello账户：' + result.user + '。正在获取内容，请稍等...')
+					title.text('已成功绑定trello账户：' + result.user + '。正在获取内容，请稍等... 如无响应请直接返回首页')
 					btn.text('授权成功！');
 					btn.css('background-color','#27AE60');
 					window.location.href = "/";

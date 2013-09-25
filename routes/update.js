@@ -20,31 +20,25 @@ module.exports = function(req, res, next) {
 	var bid = req.body.bid;
 	var key = res.locals.Server.app.locals.site.trello.key;
 
+	// 先更新，再修改默认板块
 	async.waterfall([
 		function(callback) {
 			user.read(uid, function(err, u) {
-				if (!err) {
-					if (bid) {
-						var targetBoard = check(bid, u.trello.boards);
-						// 修改默认输出板块为当前指定的板块
-						if (targetBoard) {
-							u.setting.outputBoard.id = targetBoard.id;
-							u.setting.outputBoard.name = targetBoard.name;
-						} // 否则按照原来的默认输出板块更新
-						u.save(function(err) {
-							callback(err, u);
-						});
-					} else {
-						// 如果没有制定，就按照默认板块更新
-						callback(null, u);
-					}
-				} else {
-					next(err)
-				}
+				callback(err, u);
 			});
 		}
 	], function(err, user) {
 		if (!err) {
+			// 判断有没有指定板块
+			if (bid) {
+				var targetBoard = check(bid, user.trello.boards);
+				// 修改默认输出板块为当前指定的板块
+				if (targetBoard) {
+					user.setting.outputBoard.id = targetBoard.id;
+					user.setting.outputBoard.name = targetBoard.name;
+				}
+			}
+			// 开始更新缓存
 			trello.updateCache({
 				bid: user.setting.outputBoard.id,
 				token: user.trello.token,
@@ -54,9 +48,16 @@ module.exports = function(req, res, next) {
 					user.trello.cache = results;
 					user.trello.save(function(err) {
 						if (!err) {
-							res.json({
-								stat: 'ok',
-								msg: '输入板块的内容已经更新完毕...'
+							// 保存新的默认板块ID
+							user.save(function(err) {
+								if (!err) {
+									res.json({
+										stat: 'ok',
+										msg: '输入板块的内容已经更新完毕...'
+									});
+								} else {
+									next(err);
+								}
 							});
 						} else {
 							next(err);
