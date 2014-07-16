@@ -1,7 +1,7 @@
 {
   "name": "mailmao",
-  "version": "1.0.0",
-  "description": "Mail pusher based on Trello/Express/Nodemailer",
+  "version": "1.1.0",
+  "description": "mail pusher based on Trello/Express/Nodemailer",
   "main": "app.js",
   "author": "turing <o.u.turing@gmail.com>",
   "license": "MIT",

@@ -1,5 +1,5 @@
-var user = require('../ctrlers/user'),
-	email = require('../ctrlers/email');
+var user = require('../ctrlers/user');
+var email = require('../ctrlers/email');
 
 // 触发邮件发送
 module.exports = function(req, res, next) {

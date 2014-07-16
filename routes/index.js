@@ -1,7 +1,7 @@
-var _ = require('underscore'),
-	async = require('async'),
-	trelloLib = require('../lib/trello'),
-	user = require('../ctrlers/user');
+var _ = require('underscore');
+var async = require('async');
+var trelloLib = require('../lib/trello');
+var user = require('../ctrlers/user');
 
 // home page
 module.exports = function(req, res, next) {
