@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  div#cnt.container.clearfix
-    div#icnt.row.clearfix
-      div.span4
-        div.entry
+  #cnt.container.clearfix
+    #icnt.row.clearfix
+      .span4
+        .entry
           h2.title 关于本喵
-          div.cnt
+          .cnt
             p 邮差猫基于trello
             p 帮助你发送整齐的周报，跟踪每周周报进度
             p 更有强大的自由订阅功能
@@ -15,24 +15,24 @@ block content
             iframe(width="136",height="24",frameborder="0",allowtransparency="true",marginwidth="0",marginheight="0",scrolling="no",border="0",src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&width=136&height=24&uid=1644105187&style=2&btn=red&dpc=1")
             p.credit 使用 Node.js / Express / MongoDB 构建
             a(href="http://github.com/turingou/Mailmao",target="_blank") #{sys.name}@Github
-      div.comment.span8
+      .comment.span8
         h2.title 有更好的想法？欢迎提建议：
         .ds-thread
 
 block js
-    script.
-      var duoshuoQuery = {
-          short_name: "#{site.duoshuo.short_name}",
-          sso: { 
-             login: "#{href}/signin/",
-             logout: "#{href}/signout/"
-          }
-      };
-      (function() {
-          var ds = document.createElement('script');
-          ds.type = 'text/javascript';ds.async = true;
-          ds.src = 'http://static.duoshuo.com/embed.js';
-          ds.charset = 'UTF-8';
-          (document.getElementsByTagName('head')[0] 
-          || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
+  script.
+    var duoshuoQuery = {
+      short_name: "#{site.duoshuo.short_name}",
+      sso: { 
+       login: "#{href}/signin/",
+       logout: "#{href}/signout/"
+      }
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();

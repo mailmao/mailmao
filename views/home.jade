@@ -1,45 +1,45 @@
 extends layout
 
 block content
-    #cnt.clearfix.signin
-      .container
-        #icnt.row.clearfix
-          .main.span9
-            .tools.span9.clearfix
-             .email-cnt
-              span.add-on
-                i.icon-user 
-                | 收件人邮箱
-              input(type='text',id="sendToList")
-            .preview.span9
-             .inner.clearfix
-              .send-setting.clearfix
-               h3.title 预览模式
-               .action
-                a#updateCache(href="javascript:void(0)") 
-                  i.icon-refresh 
-                  span 刷新数据
-              include templates/default
-          .sidebar.span3
-            .send-now
-              a.send.btn.btn-primary.btn-send(href="javascript:void(0)",title="将要发送给所有常用收件人") <i class="icon-envelope"></i> 发送周报
-            //- 选择要输出的板块
-            .boards
-              - if (trello.boards && trello.boards.length > 0)
-                - each board in trello.boards
-                  a(href="javascript:void(0)",data-id="#{board.id}",class="#{board.id == user.setting.outputBoard.id ? 'cur' : ''} select-boards").board-name 
-                      - if (board.id == user.setting.outputBoard.id)
-                        i.icon-ok
-                        span #{board.name}
-                      - else
-                        i.icon-circle-blank 
-                        span #{board.name}
-              - else
-                  p 你还没有板块，或者邮差猫在更新过程中发生错误，请点击下方的更新按钮更新板块信息
-            .trello
-              a.update-trello(href="javascript:void(0);") 
-                i.icon-exchange
-                | 更新trello板块信息
+  #cnt.clearfix.signin
+    .container
+      #icnt.row.clearfix
+        .main.span9
+          .tools.span9.clearfix
+           .email-cnt
+            span.add-on
+              i.icon-user 
+              | 收件人邮箱
+            input(type='text',id="sendToList")
+          .preview.span9
+           .inner.clearfix
+            .send-setting.clearfix
+             h3.title 预览模式
+             .action
+              a#updateCache(href="javascript:void(0)") 
+                i.icon-refresh 
+                span 刷新数据
+            include templates/default
+        .sidebar.span3
+          .send-now
+            a.send.btn.btn-primary.btn-send(href="javascript:void(0)",title="将要发送给所有常用收件人") <i class="icon-envelope"></i> 发送周报
+          //- 选择要输出的板块
+          .boards
+            - if (trello.boards && trello.boards.length > 0)
+              - each board in trello.boards
+                a(href="javascript:void(0)",data-id="#{board.id}",class="#{board.id == user.setting.outputBoard.id ? 'cur' : ''} select-boards").board-name 
+                    - if (board.id == user.setting.outputBoard.id)
+                      i.icon-ok
+                      span #{board.name}
+                    - else
+                      i.icon-circle-blank 
+                      span #{board.name}
+            - else
+                p 你还没有板块，或者邮差猫在更新过程中发生错误，请点击下方的更新按钮更新板块信息
+          .trello
+            a.update-trello(href="javascript:void(0);") 
+              i.icon-exchange
+              | 更新trello板块信息
 block js
   script(src='/javascripts/bs/bootstrap-popover.js')
   script(src='/javascripts/magicsuggest-1.2.5.js')

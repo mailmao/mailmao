@@ -1,37 +1,37 @@
 extends layout
 
 block content
-    #cnt.clearfix.signin
-        .container
-            #icnt.row.clearfix
-                .span12.not-auth
-                    .entry.clearfix
-                        .text.clearfix
-                            h2.title 
-                                i.icon-heart
-                                |从此爱上写周报
-                            .desc 邮差猫基于trello，<br />帮助你发送整齐的周报，跟踪每周周报进度<br />配合GTD工具更好的管理日常项目与需求，即刻抛弃低效和无趣的邮件模板，不来试试看？
-                            .login-first
-                                p
-                                    i.icon-double-angle-right 
-                                    |使用您的社交账户登录
-                                .ds-login
-                        img.bn-img(src='/images/banner.jpg',alt="邮差猫发件范本",title="邮差猫发件范本") 
+  #cnt.clearfix.signin
+    .container
+      #icnt.row.clearfix
+        .span12.not-auth
+          .entry.clearfix
+            .text.clearfix
+              h2.title 
+                i.icon-heart
+                |从此爱上写周报
+              .desc 邮差猫基于trello，<br />帮助你发送整齐的周报，跟踪每周周报进度<br />配合GTD工具更好的管理日常项目与需求，即刻抛弃低效和无趣的邮件模板，不来试试看？
+              .login-first
+                p
+                  i.icon-double-angle-right 
+                  |使用您的社交账户登录
+                .ds-login
+            img.bn-img(src='/images/banner.jpg',alt="邮差猫发件范本",title="邮差猫发件范本") 
 
 block js
-    script.
-      var duoshuoQuery = {
-          short_name: "#{site.duoshuo.short_name}",
-          sso: { 
-             login: "#{href}/signin",
-             logout: "#{href}/signout"
-          }
-      };
-      (function() {
-          var ds = document.createElement('script');
-          ds.type = 'text/javascript';ds.async = true;
-          ds.src = 'http://static.duoshuo.com/embed.js';
-          ds.charset = 'UTF-8';
-          (document.getElementsByTagName('head')[0] 
-          || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
+  script.
+    var duoshuoQuery = {
+      short_name: "#{site.duoshuo.short_name}",
+      sso: { 
+       login: "#{href}/signin",
+       logout: "#{href}/signout"
+      }
+    };
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = 'http://static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();

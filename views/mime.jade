@@ -57,13 +57,13 @@ block content
         div.controls
          a.update-btn.btn(href="/mime/update",id="updateProfile") <i class="icon-wrench"></i> 修改设置
 block js
- script(src='/javascripts/mime.js')
- script(src='/javascripts/bs/bootstrap-tab.js')
- script
-  $(function () {
-    $('#settingTabs a:first').tab('show');
-    $('#settingTabs a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
+  script(src='/javascripts/mime.js')
+  script(src='/javascripts/bs/bootstrap-tab.js')
+  script
+    $(function () {
+      $('#settingTabs a:first').tab('show');
+      $('#settingTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      });
     });
-  });

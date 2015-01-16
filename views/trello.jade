@@ -1,20 +1,20 @@
 extends layout
 
 block content
-    .signin
-      .container
-        .row
-          .span12
-            .trello.clearfix
-                h3.title 还差一步，请授权您的trello账户
-                .exchange.clearfix
-                    .left
-                        - if (user.nickname)
-                            img.avatar(src="#{user.avatar}",alt="#{user.nickname}",title="#{user.nickname}",rel="tooltip") 
-                        - else
-                            p #{user.duoshuo.user_id}
-                    .right
-                        a#vTrello.trello-btn(href="javascript:void(0);") 授权Trello
+  .signin
+    .container
+      .row
+        .span12
+          .trello.clearfix
+            h3.title 还差一步，请授权您的trello账户
+            .exchange.clearfix
+              .left
+                - if (user.nickname)
+                  img.avatar(src="#{user.avatar}",alt="#{user.nickname}",title="#{user.nickname}",rel="tooltip") 
+                - else
+                  p #{user.duoshuo.user_id}
+              .right
+                a#vTrello.trello-btn(href="javascript:void(0);") 授权Trello
 block js
-    script(src='/javascripts/trello-client.js')
-    script(src="/javascripts/trello.js")
+  script(src='/javascripts/trello-client.js')
+  script(src="/javascripts/trello.js")
