@@ -1,7 +1,7 @@
 {
   "name": "mailmao",
   "version": "2.0.0",
-  "description": "a mail pusher service based on Trello boards",
+  "description": "a mail pusher service based on trello boards",
   "main": "app.js",
   "author": "turing <o.u.turing@gmail.com>",
   "license": "MIT",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/turingou/Mailmao.git"
+    "url": "https://github.com/turingou/mailmao.git"
   },
   "bugs": {
-    "url": "https://github.com/turingou/Mailmao/issues"
+    "url": "https://github.com/turingou/mailmao/issues"
   },
   "keywords": [
     "mail",
@@ -23,19 +23,17 @@
     "weekly"
   ],
   "dependencies": {
-    "duoshuo": "*",
-    "express": "*",
+    "MD5": "*",
+    "async": "*",
+    "duoshuo": "0.1.0",
+    "express-scaffold": "^0.4.2",
+    "highlight.js": "*",
     "jade": "*",
     "less-middleware": "*",
-    "mongoose":"*",
-    "connect-mongo": "*",
-    "moment": "*",
-    "nodemailer": "*",
-    "async": "*",
     "marked": "*",
-    "highlight.js": "*",
-    "beer": "*",
-    "underscore": "*",
-    "MD5": "*"
+    "moment": "*",
+    "mongoose": "*",
+    "nodemailer": "*",
+    "underscore": "*"
   }
 }
