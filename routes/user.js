@@ -1,15 +1,22 @@
 var user = require('../ctrlers/user');
 
-exports.home = function(req, res, next) {
+exports.home = home;
+exports.update = update;
+
+function home(req, res, next) {
   user.read(res.locals.user._id, function(err, u) {
-    if (err) return next(err);
+    if (err) 
+      return next(err);
+
     res.render(u.trello.token ? 'mime': '/trello');
   });
-};
+}
 
-exports.update = function(req, res, next) {
+function update(req, res, next) {
   user.read(res.locals.user._id, function(err, u) {
-    if (err) return next(err);
+    if (err) 
+      return next(err);
+
     return res.render(u.trello.token ? 'mime-update' : '/trello');
   });
-};
+}

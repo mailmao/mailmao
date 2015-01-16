@@ -40,13 +40,14 @@ exports.signin = function(req, res, next) {
   var duoshuo = new Duoshuo(res.locals.Server.app.locals.site.duoshuo);
   duoshuo.auth(code, function(err, result) {
     // 当通信正常时
-    if (err) return next(err);
+    if (err) 
+      return next(err);
+    
     var result = result.body;
     if (result.code !== 0) return next(new Error('多说登录出错，请稍后再试或者联系管理员，具体错误:' + result.errorMessage));
+
     // 当返回正确时
-
     async.waterfall([
-
       function(callback) {
         queryUser(result.user_id, function(err, u) {
           callback(err, u)
@@ -92,9 +93,12 @@ exports.signout = function(req, res, next) {
   }
 };
 
-function passport(req, res, next, cb) {
-  if (!req.session.user) return cb();
+function passport(req, res, next, callback) {
+  if (!req.session.user) 
+    return callback();
+
   res.locals.user = req.session.user;
+
   return next();
 }
 
