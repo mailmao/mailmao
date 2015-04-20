@@ -1,13 +1,13 @@
 {
   "name": "mailmao",
   "version": "2.0.0",
-  "description": "a mail pusher service based on trello boards",
+  "description": "Mailpush service based on Trello",
   "main": "mailmao.js",
   "author": "turing <o.u.turing@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "DEBUG=mailmao,mailmao:* node mailmao.js",
-    "start": "NODE_ENV=production DEBUG=mailmao,mailmao:* pm2 start mailmao.js --name 'Mailmao'"
+    "start": "NODE_ENV=production DEBUG=mailmao,mailmao:* PORT=8080 pm2 start mailmao.js --name 'Mailmao'"
   },
   "repository": {
     "type": "git",
