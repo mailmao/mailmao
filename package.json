@@ -2,18 +2,19 @@
   "name": "mailmao",
   "version": "2.0.0",
   "description": "a mail pusher service based on trello boards",
-  "main": "app.js",
+  "main": "mailmao.js",
   "author": "turing <o.u.turing@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js"
+    "dev": "DEBUG=mailmao,mailmao:* node mailmao.js",
+    "start": "NODE_ENV=production DEBUG=mailmao,mailmao:* pm2 start mailmao.js --name 'Mailmao'"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/turingou/mailmao.git"
+    "url": "https://github.com/mailmao/mailmao.git"
   },
   "bugs": {
-    "url": "https://github.com/turingou/mailmao/issues"
+    "url": "https://github.com/mailmao/mailmao/issues"
   },
   "keywords": [
     "mail",
@@ -23,17 +24,17 @@
     "weekly"
   ],
   "dependencies": {
-    "MD5": "*",
-    "async": "*",
-    "duoshuo": "0.1.0",
-    "express-scaffold": "^0.4.2",
-    "highlight.js": "*",
-    "jade": "*",
-    "less-middleware": "*",
-    "marked": "*",
-    "moment": "*",
-    "mongoose": "*",
-    "nodemailer": "*",
-    "underscore": "*"
+    "MD5": "^1.2.1",
+    "async": "^0.9.0",
+    "debug": "^2.1.3",
+    "duoshuo": "^0.3.0",
+    "highlight.js": "8.5.0",
+    "jade": "1.9.2",
+    "marked": "0.3.3",
+    "mongoose": "4.0.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "nodemailer": "^1.3.4"
   }
 }
