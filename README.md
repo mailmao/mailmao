@@ -1,7 +1,7 @@
 ![mailmao](http://ww3.sinaimg.cn/large/61ff0de3gw1e8xjt122lpj201e01mmwy.jpg) Mailmao ![](https://badge.fury.io/js/mailmao.png)
 ---
 
-Mailmao[http://mailmao.com], Weekly reports made easy.
+[Mailmao](http://mailmao.com), Weekly reports made easy.
 
 ![screenshot](http://ww1.sinaimg.cn/large/61ff0de3gw1e8xk8vie3dj20w00nfjuo.jpg)
 
