@@ -46,6 +46,7 @@ function routeIndex(req, res, next) {
 
     // 待优化
     var cache = trello.cache;
+    
     res.render('home', {
       uid: user._id,
       user: user,

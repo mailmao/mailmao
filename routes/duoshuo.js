@@ -20,15 +20,16 @@ function sync(req, res, next) {
     u.nickname = uu.name;
     u.url = uu.url;
     u.avatar = uu.avatar;
-    u.save(function(err) {
+    u.save(syncUser);
+
+    function syncUser(err) {
       if (err)
         return next(err)
 
       // 同步本地用户到多说
-      user.sync(
-        res.locals.Server.app.locals.site.duoshuo, 
-        u, 
-        function(err, result) {
+      user.sync(res.locals.Server.app.locals.site.duoshuo, u, response);
+
+      function response(err, result) {
         if (err)
           return next(err);
 
@@ -40,7 +41,7 @@ function sync(req, res, next) {
           stat: 'ok',
           user: u
         });
-      });
-    });
+      }
+    }
   });
 }

@@ -1,8 +1,27 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var configs = require('../configs.json');
-var db = mongoose.createConnection('localhost', configs.database.name);
+import Promise from 'bluebird'
+import mongoose from 'mongoose'
+import { toUpperCase } from '../libs/utils'
 
-exports.member = db.model('member', require('./member'));
-exports.trello = db.model('trello', require('./trello'));
-exports.media = db.model('media', mediaModel);
+// Promisify all APIs
+Promise.promisifyAll(mongoose)
+
+export function createModels(db) {
+  // Init models
+  const models = {}
+  const files = [
+    'group',
+    'mail',
+    'member',
+    'log'
+  ]
+
+  files.forEach(model => {
+    module.exports[toUpperCase(model)] = models[toUpperCase(model)] = db.model(model, require(`./${model}`))
+  })
+
+  return models
+}
+
+export function connect({ uri, options={}}) {
+  return Promise.resolve(mongoose.createConnection(uri, options))
+}

@@ -1,29 +1,59 @@
-var sign = require('./routes/sign')
+// Global dependencies
+import express from 'express'
+import multer from 'multer'
+import Debug from 'debug'
 
-module.exports = routes;
+// routes
+const routes = [
+  'landing',
+  'group',
+  'member',
+  'mail',
+]
 
-function routes(app) {
-  // Home Page
-  app.get('/', sign.passport, require('./home'));
+const debug = Debug('mailmao:route:index')
+const upload = multer({ 
+  dest: 'uploads/'
+})
 
-  // Sign in and Sign out
-  app.get('/signin', sign.signin);
-  app.get('/signout', sign.signout);
+export default function(app, models) {  
+  const API_VERSION = 'v2'
+  const deps = {
+    app,
+    express,
+    upload,
+  }
 
-  // Dynamic Pages
-  app.get('/sync', sign.check, require('./duoshuo'));
-  app.get('/trello', sign.check, require('./trello'));
-  app.get('/mime', sign.check, require('mime').home);
-  app.get('/mime/update', sign.check, require('mime').update);
+  // Inject models dep
+  Object.keys(models).forEach(item =>
+    deps[item] = models[item])
 
-  // Static Pages
-  app.get('/about', sign.passport, require('./about'));
+  // Init routers
+  const routers = initRoutes(routes, deps)
 
-  // APIs
-  app.post('/update', sign.checkJSON, apis.update);
-  app.post('/send', sign.checkJSON, apis.send);
-  app.post('/upload', sign.checkJSON, apis.upload);
-  app.post('/sync', sign.check, duoshuo.sync);
-  app.post('/mime/update', sign.checkJSON, apis.setting);
-  app.post('/mime/update/token', sign.checkJSON, apis.token);
+  routes.forEach(route => {
+    // Pages
+    if (route === 'landing')
+      return app.use('/', routers.landing)
+
+    // APIs
+    app.use(`/api/${API_VERSION}/${route}`, auth, routers[route])
+  })
+
+  function auth(req, res, next) {
+    if (!req.session.uid)
+      return next(new Error(401))
+
+    debug(req.session.uid)
+
+    return next()
+  }
+}
+
+function initRoutes(routes, deps) {
+  var ret = {}
+  routes.forEach(route => {
+    ret[route] = require(`./${ route }`)(deps)
+  })
+  return ret
 }

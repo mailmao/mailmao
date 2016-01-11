@@ -1,54 +1,52 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import Debug from 'debug'
+import Promise from 'bluebird'
+import { Schema } from 'mongoose'
 
-module.exports = new Schema({
-  nickname: String,
-  email: String,
-  avatar: String,
-  password: String,
-  phone: String,
-  url: String,
-  type: {
+const debug = Debug('mailmao:models:member')
+const Member = new Schema({
+  email: {
     type: String,
-    default: 'normal'
+    unique: true
+  },
+  nickname: {
+    type: String,
+    unique: true
   },
   created: {
     type: Date,
     default: Date.now
   },
-  duoshuo: {
-    user_id: {
-      type: String,
-      unique: true
-    },
-    access_token: String
-  },
-  trello: {
+  groups: [{
     type: Schema.Types.ObjectId,
-    ref: 'trello'
+    ref: 'group'
+  }],
+  vertified: {
+    type: Number,
+    default: 0
   },
-  settings: {
-    title: {
-      type: String,
-      default: ''
-    },
-    email: {
-      type: String,
-      default: ''
-    },
-    banner: {
-      type: String,
-      default: ''
-    },
-    outputBoard: {
-      name: {
-        type: String,
-        default: ''
-      },
-      id: {
-        type: String,
-        default: ''
-      }
-    }
-  }
-});
+  uri: String,
+  phone: String,
+  firstname: String,
+  lastname: String,
+  password: String,
+  avatar: String
+})
+
+Member.static('joinGroup', function(memberId, groupId) {
+  const { Group } = require('./')
+
+  return Group.findByIdAsync(groupId)
+    .then(group => {
+      if (!group.haveInvited(memberId))
+        throw new Error(401)
+
+      return group.addMember(memberId)
+    })
+    .then(() => {
+      this.findByIdAndUpdateAsync(memberId, {
+        $push: {
+          groups: groupId
+        }
+      })
+    })
+})
